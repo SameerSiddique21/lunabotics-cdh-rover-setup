@@ -1,0 +1,8 @@
+Device,Proposed interface,Direction,Data or function,Power or logic,Verification status
+Jetson Orin Nano 8GB,Main ROS 2 computer,Bidirectional,ROS 2 computation and supervisory logic,Supply TBD,CONCEPT - not checked on hardware
+ESP32-S3,USB serial UART (proposed),Bidirectional,Motor/excavation command and status,3.3V logic at MCU; connector TBD,CONCEPT - wiring unverified
+IMU,USB or I2C (TBD),Input to Jetson,Orientation and angular velocity,Power and protocol TBD,CONCEPT - actual module not confirmed
+Camera,USB or CSI (TBD),Input to Jetson,Image stream,Power and interface TBD,CONCEPT - actual module not confirmed
+LiDAR,USB or Ethernet (TBD),Input to Jetson,Range scans,Power and interface TBD,CONCEPT - actual module not confirmed
+Motor driver/controller,Via ESP32-S3 (TBD),Bidirectional,Motor command and feedback,Motor supply TBD; safety interlocks TBD,CONCEPT - electrical signoff required
+Ground station,Wi-Fi/Ethernet (TBD),Bidirectional,Operator control and telemetry,Wireless config TBD,CONCEPT - network parameters pending

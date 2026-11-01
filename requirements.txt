@@ -1,0 +1,2 @@
+# No pip dependencies needed for the minimal project; ROS packages are installed using apt.
+# See scripts/install_dependencies.sh and README.md.

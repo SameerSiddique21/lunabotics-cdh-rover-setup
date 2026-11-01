@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="lunabotics_concept_rover">
+  <!-- CONCEPT ONLY: dimensions, masses, wheel placement, and ports need Mechanical verification. -->
+  <xacro:property name="chassis_l" value="0.80"/>
+  <xacro:property name="chassis_w" value="0.55"/>
+  <xacro:property name="chassis_h" value="0.18"/>
+  <xacro:property name="wheel_r" value="0.12"/>
+  <xacro:property name="wheel_w" value="0.06"/>
+  <xacro:macro name="box_inertia" params="m x y z">
+   <inertial><mass value="${m}"/><inertia ixx="${m*(y*y+z*z)/12}" ixy="0" ixz="0" iyy="${m*(x*x+z*z)/12}" iyz="0" izz="${m*(x*x+y*y)/12}"/></inertial>
+  </xacro:macro>
+  <link name="base_link">
+    <visual><geometry><box size="${chassis_l} ${chassis_w} ${chassis_h}"/></geometry><material name="maroon"><color rgba="0.45 0.05 0.10 1"/></material></visual>
+    <collision><geometry><box size="${chassis_l} ${chassis_w} ${chassis_h}"/></geometry></collision>
+    <xacro:box_inertia m="12" x="${chassis_l}" y="${chassis_w}" z="${chassis_h}"/>
+  </link>
+  <xacro:macro name="wheel" params="side xpos ypos">
+   <link name="${side}_wheel_link">
+    <visual><origin rpy="1.57079632679 0 0"/><geometry><cylinder radius="${wheel_r}" length="${wheel_w}"/></geometry><material name="black"><color rgba="0.12 0.12 0.12 1"/></material></visual>
+    <collision><origin rpy="1.57079632679 0 0"/><geometry><cylinder radius="${wheel_r}" length="${wheel_w}"/></geometry></collision>
+    <inertial><mass value="1"/><inertia ixx="0.0081" ixy="0" ixz="0" iyy="0.0072" iyz="0" izz="0.0081"/></inertial>
+   </link>
+   <joint name="${side}_wheel_joint" type="continuous"><parent link="base_link"/><child link="${side}_wheel_link"/><origin xyz="${xpos} ${ypos} -0.04"/><axis xyz="0 1 0"/></joint>
+  </xacro:macro>
+  <xacro:wheel side="front_left" xpos="0.27" ypos="0.31"/>
+  <xacro:wheel side="front_right" xpos="0.27" ypos="-0.31"/>
+  <xacro:wheel side="rear_left" xpos="-0.27" ypos="0.31"/>
+  <xacro:wheel side="rear_right" xpos="-0.27" ypos="-0.31"/>
+  <link name="sensor_mast"><visual><geometry><box size="0.08 0.08 0.25"/></geometry></visual><collision><geometry><box size="0.08 0.08 0.25"/></geometry></collision><xacro:box_inertia m="0.3" x="0.08" y="0.08" z="0.25"/></link>
+  <joint name="mast_mount" type="fixed"><parent link="base_link"/><child link="sensor_mast"/><origin xyz="0.10 0 0.215"/></joint>
+</robot>
